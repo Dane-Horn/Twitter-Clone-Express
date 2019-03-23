@@ -26,6 +26,8 @@ module.exports = (sequelize, DataTypes) => {
         // associations can be defined here
         User.hasMany(models.Tweet)
         User.hasMany(models.Retweet)
+        User.hasMany(models.Following)
+        User.hasMany(models.Following, { as: 'following', foreignKey: 'following_id' })
     };
     return User;
 };
