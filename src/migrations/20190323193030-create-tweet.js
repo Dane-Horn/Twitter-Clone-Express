@@ -7,10 +7,10 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.UUID
             },
-            /*user_id: {
+            user_id: {
                 allowNull: false,
                 type: Sequelize.UUID
-            },*/
+            },
             text: {
                 type: Sequelize.TEXT
             },
