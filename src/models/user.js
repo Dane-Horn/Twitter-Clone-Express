@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         salt: DataTypes.STRING
-    }, { underscored: true });
+    }, { underscored: true, freezeTableName: true, });
     User.associate = function (models) {
         // associations can be defined here
         User.hasMany(models.Tweet)

@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID,
             allowNull: false
         }
-    }, { underscored: true });
+    }, { underscored: true, freezeTableName: true });
     Following.associate = function (models) {
         // associations can be defined here
         Following.belongsTo(models.User);
