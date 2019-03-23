@@ -4,7 +4,6 @@ module.exports = {
         return queryInterface.createTable('Tweets', {
             id: {
                 allowNull: false,
-                autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.UUID
             },
@@ -22,13 +21,10 @@ module.exports = {
                 type: Sequelize.UUID
             },
             created_at: {
-                type: Sequelize.DATE
-            },
-            createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            updatedAt: {
+            updated_at: {
                 allowNull: false,
                 type: Sequelize.DATE
             }
