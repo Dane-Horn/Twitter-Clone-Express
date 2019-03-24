@@ -15,10 +15,12 @@ module.exports = {
                 type: Sequelize.TEXT
             },
             likes: {
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                defaultValue: 0
             },
             references: {
-                type: Sequelize.UUID
+                type: Sequelize.UUID,
+                defaultValue: null
             },
             created_at: {
                 allowNull: false,
