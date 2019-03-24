@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         text: DataTypes.TEXT,
         likes: DataTypes.INTEGER,
         references: DataTypes.UUID
-    }, { undescored: true, freezeTableName: true });
+    }, { underscored: true, freezeTableName: true });
     Tweet.associate = function (models) {
         // associations can be defined here
         Tweet.belongsTo(models.User)
