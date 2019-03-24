@@ -21,10 +21,6 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            salt: {
-                allowNull: false,
-                type: Sequelize.STRING
-            },
             created_at: {
                 allowNull: false,
                 type: Sequelize.DATE
@@ -36,6 +32,6 @@ module.exports = {
         });
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('Users');
+        return queryInterface.dropTable('User');
     }
 };

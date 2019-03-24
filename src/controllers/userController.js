@@ -15,8 +15,7 @@ module.exports = {
                 id: uuid(),
                 username: req.body.username,
                 email: req.body.email,
-                password: hash,
-                salt: req.body.salt
+                password: hash
             });
 
             let { dataValues: { password, ...payload } } = newUser;

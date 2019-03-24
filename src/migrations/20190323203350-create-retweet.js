@@ -26,6 +26,6 @@ module.exports = {
         });
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('Retweets');
+        return queryInterface.dropTable('Retweet');
     }
 };

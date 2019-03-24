@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        salt: DataTypes.STRING
+        }
     }, { underscored: true, freezeTableName: true });
     User.associate = function (models) {
         // associations can be defined here
