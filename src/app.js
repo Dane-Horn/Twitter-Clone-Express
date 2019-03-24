@@ -7,4 +7,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+require('./routes/userRoutes')(app);
+
 module.exports = app;
