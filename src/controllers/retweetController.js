@@ -17,5 +17,18 @@ module.exports = {
         } catch (error) {
             return res.status(500).send({ message: 'Internal server error' });
         }
+    },
+    async delete(req, res) {
+        try {
+            let retweet = await Retweet.findOne({ where: { id: req.params.id } });
+            if (!retweet)
+                return res.status(404).send({ message: 'Retweet not found' });
+            if (retweet.user_id != req.userID)
+                return res.status(401).send({ message: 'Unauthorized' });
+            await retweet.destroy();
+            return res.status(204).send();
+        } catch (error) {
+            return res.status(500).send({ message: 'Internal server error' });
+        }
     }
 };
