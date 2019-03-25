@@ -10,7 +10,6 @@ module.exports = {
 
             if (user)
                 return res.status(400).send({ message: 'invalid user sent' });
-            console.log('this is user:', uuid());
             let newUser = await User.create({
                 id: uuid(),
                 username: req.body.username,
@@ -45,6 +44,19 @@ module.exports = {
                 });
             return res.status(200).send({ token });
         } catch (error) {
+            return res.status(500).send({ message: 'Internal server error' });
+        }
+    },
+    async delete(req, res) {
+        try {
+            console.log("user id is:", req.userID)
+            let user = await User.findOne({ where: { id: req.userID } });
+            if (!user)
+                return res.status(404).send({ message: 'User not found' });
+            await user.destroy();
+            return res.status(204).send();
+        } catch (error) {
+            console.log(error);
             return res.status(500).send({ message: 'Internal server error' });
         }
     }
