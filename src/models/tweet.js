@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     Tweet.associate = function (models) {
         // associations can be defined here
         Tweet.belongsTo(models.User)
-        Tweet.hasMany(models.Retweet)
+        Tweet.hasMany(models.Retweet, { onDelete: 'CASCADE', hooks: true })
     };
     return Tweet;
 };
