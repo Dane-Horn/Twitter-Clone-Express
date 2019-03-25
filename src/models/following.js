@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     Following.associate = function (models) {
         // associations can be defined here
         Following.belongsTo(models.User);
-        Following.belongsTo(models.User, { as: 'following_user' });
+        Following.belongsTo(models.User, { as: 'following' });
     };
     return Following;
 };
