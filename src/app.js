@@ -9,4 +9,5 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 require('./routes/userRoutes')(app);
 require('./routes/tweetRoutes')(app);
+require('./routes/retweetRoutes')(app);
 module.exports = app;
