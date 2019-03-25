@@ -23,10 +23,13 @@ module.exports = (sequelize, DataTypes) => {
     }, { underscored: true, freezeTableName: true });
     User.associate = function (models) {
         // associations can be defined here
-        User.hasMany(models.Tweet)
-        User.hasMany(models.Retweet)
-        User.hasMany(models.Following)
-        User.hasMany(models.Following, { as: 'following', foreignKey: 'following_id' })
+        User.hasMany(models.Tweet, { onDelete: 'CASCADE', hooks: true });
+        User.hasMany(models.Retweet, { onDelete: 'CASCADE', hooks: true });
+        User.hasMany(models.Following, { onDelete: 'CASCADE', hooks: true });
+        User.hasMany(models.Following, {
+            as: 'following', foreignKey: 'following_id',
+            onDelete: 'CASCADE', hooks: true
+        });
     };
     return User;
 };
