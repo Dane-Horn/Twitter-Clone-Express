@@ -28,5 +28,19 @@ module.exports = {
         } catch (error) {
             return res.status(500).send({ message: 'Internal server error' });
         }
+    },
+    async delete(req, res) {
+        try {
+            let tweet = await Tweet.findOne({ where: { id: req.params.id } });
+            if (!tweet)
+                return res.status(404).send({ message: 'Tweet does not exist' });
+            if (tweet.user_id != req.userID)
+                return res.status(401).send({ message: 'Unauthorized' });
+            await tweet.destroy();
+            res.status(204).send();
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Internal server error' });
+        }
     }
 };
