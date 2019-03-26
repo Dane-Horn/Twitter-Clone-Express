@@ -1,4 +1,5 @@
 const User = require('../models').User;
+const Following = require('../models').Following;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const uuid = require('uuid/v1');
@@ -56,7 +57,20 @@ module.exports = {
             await user.destroy();
             return res.status(204).send();
         } catch (error) {
-            console.log(error);
+            return res.status(500).send({ message: 'Internal server error' });
+        }
+    },
+    async follow(req, res) {
+        try {
+            let user = await User.findOne({ where: { id: req.params.id } });
+            if (!user)
+                return res.status(400).send({ message: 'Invalid user sent' });
+            let following = await Following.create({
+                user_id: req.userID,
+                following_id: req.params.id
+            });
+            res.status(201).send();
+        } catch (error) {
             return res.status(500).send({ message: 'Internal server error' });
         }
     }
