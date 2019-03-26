@@ -65,11 +65,35 @@ module.exports = {
             let user = await User.findOne({ where: { id: req.params.id } });
             if (!user)
                 return res.status(400).send({ message: 'Invalid user sent' });
+            let follow = await Following.findOne({
+                where: {
+                    user_id: req.userID,
+                    following_id: req.params.id
+                }
+            });
+            if (follow)
+                return res.status(400).send({ message: 'Already following user' });
             let following = await Following.create({
                 user_id: req.userID,
                 following_id: req.params.id
             });
             res.status(201).send();
+        } catch (error) {
+            return res.status(500).send({ message: 'Internal server error' });
+        }
+    },
+    async unfollow(req, res) {
+        try {
+            let following = await Following.findOne({
+                where: {
+                    user_id: req.userID,
+                    following_id: req.params.id
+                }
+            });
+            if (!following)
+                return res.status(400).send({ message: 'Invalid user sent' });
+            await following.destroy();
+            return res.status(204).send();
         } catch (error) {
             return res.status(500).send({ message: 'Internal server error' });
         }
