@@ -62,6 +62,8 @@ module.exports = {
     },
     async follow(req, res) {
         try {
+            if (req.userID === req.params.id)
+                return res.status(400).send({ message: 'Cannot follow yourself' });
             let user = await User.findOne({ where: { id: req.params.id } });
             if (!user)
                 return res.status(400).send({ message: 'Invalid user sent' });
