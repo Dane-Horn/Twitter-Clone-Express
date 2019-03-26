@@ -22,8 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     }, { underscored: true, freezeTableName: true });
     Tweet.associate = function (models) {
         // associations can be defined here
-        Tweet.belongsTo(models.User)
-        Tweet.hasMany(models.Retweet, { onDelete: 'CASCADE', hooks: true })
+        Tweet.hasMany(models.Tweet, { foreignKey: 'references', as: 'reply', onDelete: 'CASCADE', hooks: true });
+        Tweet.belongsTo(models.Tweet, { foreignKey: 'references', as: 'parent' });
+        Tweet.belongsTo(models.User);
+        Tweet.hasMany(models.Retweet, { onDelete: 'CASCADE', hooks: true });
     };
     return Tweet;
 };
