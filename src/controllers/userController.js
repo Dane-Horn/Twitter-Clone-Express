@@ -144,7 +144,13 @@ module.exports = {
                             include: [
                                 {
                                     model: Tweet,
-                                    where: { references: null }
+                                    where: { references: null },
+                                    include: [
+                                        {
+                                            model: Tweet,
+                                            as: 'replies'
+                                        }
+                                    ]
                                 },
                                 {
                                     model: Retweet
