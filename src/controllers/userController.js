@@ -178,11 +178,43 @@ module.exports = {
         }
 
     },
+    async otherPosts(req, res) {
+        try {
+            let tweets = await Tweet.findAll({
+                where: { user_id: req.params.id }
+            });
+            let retweets = await Retweet.findAll({
+                where: { user_id: req.params.id }
+            });
+            tweets = snakeCaseArray(tweets);
+            retweets = snakeCaseArray(retweets);
+            res.status(200).send({ tweets, retweets });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Internal server error' });
+        }
+    },
     async following(req, res) {
         try {
-            let following = Following.findAll({ where: { user_id: req.userID } });
+            let following = await Following.findAll({
+                where: { user_id: req.userID },
+                include: [
+                    {
+                        model: User,
+                        as: 'following',
+                        attributes: ['id', 'username']
+                    }
+                ],
+                attributes: []
+            });
+            following = following.map((item) => {
+                let { following: { dataValues: user } } = item;
+                user = snakeCaseKeys(user);
+                return user;
+            });
             res.status(200).send(following);
         } catch (error) {
+            console.log(error);
             res.status(500).send({ message: 'Internal server error' });
         }
     }
