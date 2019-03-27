@@ -143,7 +143,8 @@ module.exports = {
                             as: 'following',
                             include: [
                                 {
-                                    model: Tweet
+                                    model: Tweet,
+                                    where: { references: null }
                                 },
                                 {
                                     model: Retweet
@@ -155,13 +156,15 @@ module.exports = {
                     attributes: []
                 }
             );
+            console.log(following);
             let ret = { tweets: [], retweets: [] };
             following.forEach((item) => {
                 let { dataValues: { following: { id, Tweets, Retweets } } } = item;
-                ret.tweets.concat(Tweets);
-                ret.retweets.concat(Retweets);
+                ret.tweets = ret.tweets.concat(Tweets);
+                ret.retweets = ret.retweets.concat(Retweets);
             });
-            console.log(ret);
+            ret.tweets = snakeCaseArray(ret.tweets);
+            ret.retweets = snakeCaseArray(ret.retweets);
             res.status(200).send(ret);
         } catch (error) {
             console.log(error);
