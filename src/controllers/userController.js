@@ -177,5 +177,13 @@ module.exports = {
             res.status(500).send({ message: 'Internal server error' });
         }
 
+    },
+    async following(req, res) {
+        try {
+            let following = Following.findAll({ where: { user_id: req.userID } });
+            res.status(200).send(following);
+        } catch (error) {
+            res.status(500).send({ message: 'Internal server error' });
+        }
     }
 };
