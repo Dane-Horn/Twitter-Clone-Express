@@ -7,4 +7,5 @@ module.exports = (app) => {
     app.delete('/user/deregister', checkAuth, userController.delete);
     app.post('/follow/:id', checkAuth, userController.follow);
     app.delete('/unfollow/:id', checkAuth, userController.unfollow);
+    app.get('/user/posts/own', checkAuth, userController.ownPosts);
 }

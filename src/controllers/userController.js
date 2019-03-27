@@ -1,8 +1,22 @@
 const User = require('../models').User;
 const Following = require('../models').Following;
+const Tweet = require('../models').Tweet;
+const Retweet = require('../models').Retweet;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const uuid = require('uuid/v1');
+const snakeCaseKeys = require('snakecase-keys');
+
+function snakeCaseArray(arr) {
+    let ret =
+        arr.map((item) => {
+            item = item.get({ plain: true });
+            item = snakeCaseKeys(item);
+            return item;
+        });
+    return ret;
+}
+
 module.exports = {
     async create(req, res) {
         try {
@@ -97,6 +111,22 @@ module.exports = {
             await following.destroy();
             return res.status(204).send();
         } catch (error) {
+            return res.status(500).send({ message: 'Internal server error' });
+        }
+    },
+    async ownPosts(req, res) {
+        try {
+            let tweets = await Tweet.findAll({
+                where: { user_id: req.userID }
+            });
+            let retweets = await Retweet.findAll({
+                where: { user_id: req.userID }
+            });
+            tweets = snakeCaseArray(tweets);
+            retweets = snakeCaseArray(retweets);
+            res.status(200).send({ tweets, retweets });
+        } catch (error) {
+            console.log(error);
             return res.status(500).send({ message: 'Internal server error' });
         }
     }
