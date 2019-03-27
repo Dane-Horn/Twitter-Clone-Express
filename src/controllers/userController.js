@@ -129,5 +129,44 @@ module.exports = {
             console.log(error);
             return res.status(500).send({ message: 'Internal server error' });
         }
+    },
+    async feed(req, res) {
+        try {
+            let following = await Following.findAll(
+                {
+                    where: {
+                        user_id: req.userID
+                    },
+                    include: [
+                        {
+                            model: User,
+                            as: 'following',
+                            include: [
+                                {
+                                    model: Tweet
+                                },
+                                {
+                                    model: Retweet
+                                }
+                            ],
+                            attributes: ['id']
+                        }
+                    ],
+                    attributes: []
+                }
+            );
+            let ret = { tweets: [], retweets: [] };
+            following.forEach((item) => {
+                let { dataValues: { following: { id, Tweets, Retweets } } } = item;
+                ret.tweets.concat(Tweets);
+                ret.retweets.concat(Retweets);
+            });
+            console.log(ret);
+            res.status(200).send(ret);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({ message: 'Internal server error' });
+        }
+
     }
 };

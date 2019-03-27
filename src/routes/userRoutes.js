@@ -8,4 +8,5 @@ module.exports = (app) => {
     app.post('/follow/:id', checkAuth, userController.follow);
     app.delete('/unfollow/:id', checkAuth, userController.unfollow);
     app.get('/posts/own', checkAuth, userController.ownPosts);
+    app.get('/feed', checkAuth, userController.feed);
 }
