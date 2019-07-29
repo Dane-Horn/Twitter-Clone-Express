@@ -2,7 +2,7 @@ const User = require('../models').User;
 const Following = require('../models').Following;
 const Tweet = require('../models').Tweet;
 const Retweet = require('../models').Retweet;
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const uuid = require('uuid/v1');
 const snakeCaseKeys = require('snakecase-keys');
@@ -64,7 +64,6 @@ module.exports = {
     },
     async delete(req, res) {
         try {
-            console.log("user id is:", req.userID)
             let user = await User.findOne({ where: { id: req.userID } });
             if (!user)
                 return res.status(404).send({ message: 'User not found' });
@@ -126,7 +125,6 @@ module.exports = {
             retweets = snakeCaseArray(retweets);
             res.status(200).send({ tweets, retweets });
         } catch (error) {
-            console.log(error);
             return res.status(500).send({ message: 'Internal server error' });
         }
     },
@@ -162,7 +160,6 @@ module.exports = {
                     attributes: []
                 }
             );
-            console.log(following);
             let ret = { tweets: [], retweets: [] };
             following.forEach((item) => {
                 let { dataValues: { following: { id, Tweets, Retweets } } } = item;
@@ -173,7 +170,6 @@ module.exports = {
             ret.retweets = snakeCaseArray(ret.retweets);
             res.status(200).send(ret);
         } catch (error) {
-            console.log(error);
             res.status(500).send({ message: 'Internal server error' });
         }
 
@@ -190,7 +186,6 @@ module.exports = {
             retweets = snakeCaseArray(retweets);
             res.status(200).send({ tweets, retweets });
         } catch (error) {
-            console.log(error);
             return res.status(500).send({ message: 'Internal server error' });
         }
     },
@@ -214,7 +209,6 @@ module.exports = {
             });
             res.status(200).send(following);
         } catch (error) {
-            console.log(error);
             res.status(500).send({ message: 'Internal server error' });
         }
     }
