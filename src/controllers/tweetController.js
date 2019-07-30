@@ -9,7 +9,7 @@ module.exports = {
             req.body.id = uuid();
             let fields = Object.keys(req.body);
             let tweet = await Tweet.create(req.body, { fields });
-            return res.status(201).send();
+            return res.status(200).send(tweet);
         } catch (error) {
             return res.status(500).send({ message: 'Internal server error' });
         }
@@ -17,14 +17,14 @@ module.exports = {
     async createReply(req, res) {
         try {
             let replyTweet = await Tweet.findOne({ where: { id: req.params.id } });
-            if (!replyTweet)
-                res.status(400).send({ message: 'Invalid tweet' });
+            if (replyTweet === null)
+                return res.status(400).send({ message: 'Invalid tweet to reply to' });
             req.body.references = req.params.id;
             req.body.user_id = req.userID;
             req.body.id = uuid();
             let fields = Object.keys(req.body);
             let reply = await Tweet.create(req.body, { fields });
-            return res.status(201).send();
+            return res.status(200).send(reply);
         } catch (error) {
             return res.status(500).send({ message: 'Internal server error' });
         }
