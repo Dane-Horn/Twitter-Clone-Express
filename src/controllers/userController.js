@@ -114,6 +114,16 @@ module.exports = {
             return res.status(500).send({ message: 'Internal server error' });
         }
     },
+    async me(req, res) {
+        try {
+            let user = await User.findOne({ where: { id: req.userID } });
+            if (!user)
+                return res.status(401).send();
+            return res.status(200).send({ user: user })
+        } catch (error) {
+            return res.status(500).send({ message: 'Internal server error' });
+        }
+    },
     async ownPosts(req, res) {
         try {
             let tweets = await Tweet.findAll({
