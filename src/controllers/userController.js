@@ -126,7 +126,7 @@ module.exports = {
             let user = await User.findOne({ where: { id: req.userID } });
             if (!user)
                 return res.status(401).send();
-            return res.status(200).send({ user: user })
+            return res.status(200).send(user);
         } catch (error) {
             return res.status(500).send({ message: 'Internal server error' });
         }
