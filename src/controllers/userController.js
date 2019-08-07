@@ -18,6 +18,14 @@ function snakeCaseArray(arr) {
 }
 
 module.exports = {
+    async comp(req, res) {
+        function fib(n) {
+            if (n < 0) return 0;
+            if (n == 1) return 1;
+            return fib(n - 1) + fib(n - 2);
+        }
+        return res.status(200).send({ message: fib(30) });
+    },
     async create(req, res) {
         try {
             const hash = await bcrypt.hash(req.body.password, 12);
